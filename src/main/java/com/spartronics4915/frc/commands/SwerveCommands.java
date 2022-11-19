@@ -41,7 +41,7 @@ public class SwerveCommands {
 
             Translation2d translation = new Translation2d(-y1, -x1);
             
-            mSwerve.drive(translation, x2, !mController.getRawButton(kRobotOrientedButton), true);
+            mSwerve.drive(translation, -x2, !mController.getRawButton(kRobotOrientedButton), true);
         }
 
         @Override

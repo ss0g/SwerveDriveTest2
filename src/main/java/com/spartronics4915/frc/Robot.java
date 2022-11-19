@@ -34,6 +34,8 @@ public class Robot extends TimedRobot {
     mAutonomousCommand = mRobotContainer.getAutonomousCommand();
     mTeleopCommand = mRobotContainer.getTeleopCommand();
     mTestingCommand = mRobotContainer.getTestingCommand();
+    
+    // mRobotContainer.zeroSwerve();
   }
 
   /**

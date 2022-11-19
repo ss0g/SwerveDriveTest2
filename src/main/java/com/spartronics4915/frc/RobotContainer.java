@@ -7,6 +7,7 @@ package com.spartronics4915.frc;
 import com.spartronics4915.frc.commands.SwerveCommands;
 import com.spartronics4915.frc.subsystems.Swerve;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,4 +71,12 @@ public class RobotContainer {
   public Command getTestingCommand() {
     return mTestingCommand;
   }
+
+  // public void zeroSwerve() {
+  //   SwerveModuleState[] zeroStates = new SwerveModuleState[4];
+  //   for (SwerveModuleState s : zeroStates) {
+  //     s = new SwerveModuleState();
+  //   }
+  //   mSwerve.setModuleStates(zeroStates);
+  // }
 }

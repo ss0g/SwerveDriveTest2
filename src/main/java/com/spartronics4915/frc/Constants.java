@@ -74,7 +74,7 @@ public final class Constants {
         
         public static final Function<Integer, CANSparkMax> kMotorConstructor = (Integer ID) -> { return new CANSparkMax(ID, MotorType.kBrushless); };
         
-        public static final boolean kDriveMotorsAreInverted = false;
+        public static final boolean kDriveMotorsAreInverted = true;
         public static final boolean kAngleMotorsAreInverted = false;
 
         public static final IdleMode kDriveIdleMode = IdleMode.kBrake;
@@ -86,7 +86,7 @@ public final class Constants {
             public static final int kDriveMotorID = 1;
             public static final int kAngleMotorID = 2;
             public static final int kEncoderID = 0;
-            public static final double kAngleOffset = 0.0; // placeholder
+            public static final double kAngleOffset = 6.277663;
             public static final SwerveModuleConstants kConstants = 
                 new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
         }
@@ -95,7 +95,7 @@ public final class Constants {
             public static final int kDriveMotorID = 3;
             public static final int kAngleMotorID = 4;
             public static final int kEncoderID = 1;
-            public static final double kAngleOffset = 0.0; // placeholder
+            public static final double kAngleOffset = 3.090590;
             public static final SwerveModuleConstants kConstants = 
                 new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
         }
@@ -104,7 +104,7 @@ public final class Constants {
             public static final int kDriveMotorID = 5;
             public static final int kAngleMotorID = 6;
             public static final int kEncoderID = 2;
-            public static final double kAngleOffset = 0.0; // placeholder
+            public static final double kAngleOffset = 6.111399;
             public static final SwerveModuleConstants kConstants = 
                 new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
         }
@@ -113,14 +113,14 @@ public final class Constants {
             public static final int kDriveMotorID = 7;
             public static final int kAngleMotorID = 8;
             public static final int kEncoderID = 3;
-            public static final double kAngleOffset = 0.0; // placeholder
+            public static final double kAngleOffset = 1.266737;
             public static final SwerveModuleConstants kConstants = 
                 new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
         }
 
         public static final SwerveDriveKinematics kKinematics = new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2.0, -kTrackWidth / 2.0), // front left, module 0
-            new Translation2d(kWheelBase / 2.0, kTrackWidth / 2.0), // front right, module 1
+            new Translation2d(kWheelBase / 2.0, kTrackWidth / 2.0), // front left, module 0
+            new Translation2d(kWheelBase / 2.0, -kTrackWidth / 2.0), // front right, module 1
             new Translation2d(-kWheelBase / 2.0, kTrackWidth / 2.0), // back left, module 2
             new Translation2d(-kWheelBase / 2.0, -kTrackWidth / 2.0) // back right, module 3
         );
