@@ -24,30 +24,7 @@ public class Swerve extends SubsystemBase {
     private SwerveModule[] mModules;
     private AHRS mNavX;
 
-    /**
-     * for testing
-     */
-    private DoubleSupplier mTestingAngleSupplier = new DoubleSupplier() {
-        private int mCount = 0;
-        private double mAngle = 0;
-
-        @Override
-        public double getAsDouble() {
-            mCount++;
-            mAngle = mCount * Math.PI / 4;
-            mAngle = mAngle >= 2.0 * Math.PI ? (2.0 * Math.PI) % mAngle : mAngle;
-            return mAngle;
-        }
-
-        public int getCount() {
-            return mCount;
-        }
-
-        public void reset() {
-            mCount = 0;
-            mAngle = 0;
-        }
-    };
+    private boolean mIsFieldRelative = true;
 
     public Swerve() {
         mNavX = new AHRS();
@@ -63,9 +40,10 @@ public class Swerve extends SubsystemBase {
         };
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+    public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
         ChassisSpeeds chassisSpeeds;
-        if (fieldRelative) {
+        SmartDashboard.putBoolean("field relative", mIsFieldRelative);
+        if (mIsFieldRelative) {
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
                 translation.getX(),
                 translation.getY(),
@@ -97,6 +75,14 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public void setFieldRelative(boolean fieldRelative) {
+        mIsFieldRelative = fieldRelative;
+    }
+
+    public boolean getFieldRelative() {
+        return mIsFieldRelative;
+    }
+
     public Pose2d getPose() {
         return mOdometry.getPoseMeters();
     }
@@ -125,19 +111,6 @@ public class Swerve extends SubsystemBase {
 
     public void zeroNavX() {
         mNavX.reset();
-    }
-
-    public DoubleSupplier getTestingAngleSupplier() {
-        return mTestingAngleSupplier;
-    }
-
-    public void resetTestingAngle() {
-        try {
-            mTestingAngleSupplier.getClass().getMethod("reset").invoke(mTestingAngleSupplier); // cant call this method normally because it is an anonymous class
-        } catch (Exception e) {
-            System.err.println("Failed to reset swerve testing angle");
-            e.printStackTrace(System.err);
-        }
     }
 
     public void zeroModules() {

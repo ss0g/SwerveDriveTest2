@@ -12,77 +12,82 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import static com.spartronics4915.frc.Constants.OI.*;
 
+import com.ctre.phoenix.ButtonMonitor;
+
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final XboxController mController;
-  
-  // The robot's subsystems and commands are defined here...
-  private final Swerve mSwerve;
-  private final SwerveCommands mSwerveCommands;
+    private final XboxController mController;
 
-  private final Command mAutonomousCommand;
-  private final Command mTeleopInitCommand;
-  private final Command mTeleopCommand;
-  private final Command mTestingCommand;
+    // The robot's subsystems and commands are defined here...
+    private final Swerve mSwerve;
+    private final SwerveCommands mSwerveCommands;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    mController = new XboxController(kControllerID);
-    
-    mSwerve = new Swerve();
-    mSwerveCommands = new SwerveCommands(mController, mSwerve);
+    private final Command mAutonomousCommand;
+    private final Command mTeleopInitCommand;
+    private final Command mTeleopCommand;
+    private final Command mTestingCommand;
 
-    mAutonomousCommand = null;
-    mTeleopInitCommand = mSwerveCommands.new TeleopInitCommand();
-    mTeleopCommand = mSwerveCommands.new TeleopCommand();
-    mTestingCommand = mSwerveCommands.new TestCommand();
-    
-    // Configure the button bindings
-    configureButtonBindings();
-  }
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        mController = new XboxController(kControllerID);
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {}
+        mSwerve = new Swerve();
+        mSwerveCommands = new SwerveCommands(mController, mSwerve);
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    return mAutonomousCommand;
-  }
+        mAutonomousCommand = null;
+        mTeleopInitCommand = mSwerveCommands.new TeleopInitCommand();
+        mTeleopCommand = mSwerveCommands.new TeleopCommand();
+        mTestingCommand = mSwerveCommands.new TestCommand();
 
-  public Command getTeleopInitCommand() {
-    return mTeleopInitCommand;
-  }
+        // Configure the button bindings
+        configureButtonBindings();
+    }
 
-  public Command getTeleopCommand() {
-    return mTeleopCommand;
-  }
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+     * it to a {@link
+     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
+        new JoystickButton(mController, kToggleFieldRelativeButton)
+            .whenPressed(mSwerveCommands.new ToggleFieldRelative());
+    }
 
-  public Command getTestingCommand() {
-    return mTestingCommand;
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        return mAutonomousCommand;
+    }
 
-  // public void zeroSwerve() {
-  //   SwerveModuleState[] zeroStates = new SwerveModuleState[4];
-  //   for (SwerveModuleState s : zeroStates) {
-  //     s = new SwerveModuleState();
-  //   }
-  //   mSwerve.setModuleStates(zeroStates);
-  // }
+    public Command getTeleopInitCommand() {
+        return mTeleopInitCommand;
+    }
+
+    public Command getTeleopCommand() {
+        return mTeleopCommand;
+    }
+
+    public Command getTestingCommand() {
+        return mTestingCommand;
+    }
 }

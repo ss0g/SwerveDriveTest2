@@ -143,7 +143,7 @@ public final class Constants {
     public static final class OI {
         public static final int kControllerID = 2;
 
-        public static final int kRobotOrientedButton = 6; // TODO: write down which button this is
+        public static final int kToggleFieldRelativeButton = 1; // i think this is the A button
         public static final int kTestingButton = 1;
 
         public static final double kDeadband = 0.08;
