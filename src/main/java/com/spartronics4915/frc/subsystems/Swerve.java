@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,7 +14,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.spartronics4915.frc.Constants.Swerve.*;
 
+import java.util.Arrays;
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry mOdometry;
@@ -78,7 +82,7 @@ public class Swerve extends SubsystemBase {
 
         SwerveModuleState[] moduleStates = kKinematics.toSwerveModuleStates(chassisSpeeds);
         
-        kKinematics.desaturateWheelSpeeds(moduleStates, kMaxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, kMaxSpeed);
 
         for (SwerveModule mod : mModules) {
             mod.setDesiredState(moduleStates[mod.getModuleNumber()], isOpenLoop);
@@ -86,7 +90,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        kKinematics.desaturateWheelSpeeds(desiredStates, kMaxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, kMaxSpeed);
 
         for (SwerveModule mod : mModules) {
             mod.setDesiredState(desiredStates[mod.getModuleNumber()], false);
@@ -98,7 +102,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getYaw() {
-        return Rotation2d.fromDegrees(mNavX.getYaw());
+        return Rotation2d.fromDegrees(-mNavX.getYaw());
     }
 
     public void resetOdometry(Pose2d pose) {
@@ -134,6 +138,15 @@ public class Swerve extends SubsystemBase {
             System.err.println("Failed to reset swerve testing angle");
             e.printStackTrace(System.err);
         }
+    }
+
+    public void zeroModules() {
+        SwerveModuleState[] zeroedStates = new SwerveModuleState[4];
+        Arrays.fill(zeroedStates, new SwerveModuleState(0, new Rotation2d(0)));
+        // for (SwerveModuleState state : zeroedStates) {
+        //     state = new SwerveModuleState(0, new Rotation2d(0));
+        // }
+        setModuleStates(zeroedStates);
     }
 
     @Override

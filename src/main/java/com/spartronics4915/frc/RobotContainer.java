@@ -29,6 +29,7 @@ public class RobotContainer {
   private final SwerveCommands mSwerveCommands;
 
   private final Command mAutonomousCommand;
+  private final Command mTeleopInitCommand;
   private final Command mTeleopCommand;
   private final Command mTestingCommand;
 
@@ -40,8 +41,9 @@ public class RobotContainer {
     mSwerveCommands = new SwerveCommands(mController, mSwerve);
 
     mAutonomousCommand = null;
+    mTeleopInitCommand = mSwerveCommands.new TeleopInitCommand();
     mTeleopCommand = mSwerveCommands.new TeleopCommand();
-    mTestingCommand = mSwerveCommands.new TestingCommand();
+    mTestingCommand = mSwerveCommands.new TestCommand();
     
     // Configure the button bindings
     configureButtonBindings();
@@ -62,6 +64,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return mAutonomousCommand;
+  }
+
+  public Command getTeleopInitCommand() {
+    return mTeleopInitCommand;
   }
 
   public Command getTeleopCommand() {

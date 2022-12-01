@@ -48,11 +48,11 @@ public final class Constants {
             public static final int kContinuousCurrentLimit = 80;
 
             public static final double kGearRatio = 8.33 / 1.0;
-            public static final double kVelocityConversionFactor = ((kWheelDiameter * Math.PI) / kGearRatio) / 60.0; // ??? what is the 60 ??
+            public static final double kVelocityConversionFactor = ((kWheelDiameter * Math.PI) / kGearRatio) / 60.0; // ??? what is the 60 ?? TODO: try removing
         }
 
         public static final class Angle {
-            public static final double kP = 0.1;
+            public static final double kP = 1.0;
             public static final double kI = 0.0;
             public static final double kD = 0.005;
             public static final double kFF = 0;
@@ -88,7 +88,7 @@ public final class Constants {
             public static final int kEncoderID = 0;
             public static final double kAngleOffset = 6.277663;
             public static final SwerveModuleConstants kConstants = 
-                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
+                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset);
         }
 
         public static final class Module1 {
@@ -97,7 +97,7 @@ public final class Constants {
             public static final int kEncoderID = 1;
             public static final double kAngleOffset = 3.090590;
             public static final SwerveModuleConstants kConstants = 
-                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
+                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset);
         }
 
         public static final class Module2 {
@@ -106,7 +106,7 @@ public final class Constants {
             public static final int kEncoderID = 2;
             public static final double kAngleOffset = 6.111399;
             public static final SwerveModuleConstants kConstants = 
-                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
+                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset);
         }
 
         public static final class Module3 {
@@ -115,7 +115,7 @@ public final class Constants {
             public static final int kEncoderID = 3;
             public static final double kAngleOffset = 1.266737;
             public static final SwerveModuleConstants kConstants = 
-                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset) {};
+                new SwerveModuleConstants(kDriveMotorID, kAngleMotorID, kEncoderID, kAngleOffset);
         }
 
         public static final SwerveDriveKinematics kKinematics = new SwerveDriveKinematics(
@@ -125,8 +125,7 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2.0, -kTrackWidth / 2.0) // back right, module 3
         );
         
-        // this is only abstract so people dont try to instantiate it outside of Constants
-        public static abstract class SwerveModuleConstants {
+        public static class SwerveModuleConstants {
             public final int driveMotorID;
             public final int angleMotorID;
             public final int encoderID;
@@ -144,7 +143,7 @@ public final class Constants {
     public static final class OI {
         public static final int kControllerID = 2;
 
-        public static final int kRobotOrientedButton = 6;
+        public static final int kRobotOrientedButton = 6; // TODO: write down which button this is
         public static final int kTestingButton = 1;
 
         public static final double kDeadband = 0.08;

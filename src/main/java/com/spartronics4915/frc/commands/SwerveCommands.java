@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
+import static com.spartronics4915.frc.Constants.Swerve.*;
 import static com.spartronics4915.frc.Constants.OI.*;
 
 public class SwerveCommands {
@@ -19,6 +20,28 @@ public class SwerveCommands {
     public SwerveCommands(XboxController controller, Swerve swerve) {
         mController = controller;
         mSwerve = swerve;
+    }
+
+    public class TeleopInitCommand extends CommandBase {
+        public TeleopInitCommand() {
+            addRequirements(mSwerve);
+        }
+
+        @Override
+        public void initialize() {
+            mSwerve.zeroModules();
+        }
+
+        @Override
+        public void execute() {}
+
+        @Override
+        public void end(boolean interrupted) {}
+
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
     }
 
     public class TeleopCommand extends CommandBase {
@@ -53,11 +76,33 @@ public class SwerveCommands {
         }
     }
 
-    public class TestingCommand extends CommandBase {
+    public class TestInitCommand extends CommandBase {
+        public TestInitCommand() {
+            addRequirements(mSwerve);
+        }
+
+        @Override
+        public void initialize() {
+            mSwerve.zeroModules();
+        }
+
+        @Override
+        public void execute() {}
+
+        @Override
+        public void end(boolean interrupted) {}
+
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
+
+    public class TestCommand extends CommandBase {
         private double mDesiredAngle;
         private SwerveModuleState[] mDesiredStates;
         
-        public TestingCommand() {
+        public TestCommand() {
             addRequirements(mSwerve);
         }
 

@@ -77,13 +77,13 @@ public class SwerveModule {
             );
         }
 
-        double angle = Math.abs(desiredState.speedMetersPerSecond) > kMaxSpeed * 0.01 ?
-            mLastAngle :
-            desiredState.angle.getRadians();
+        // double angle = Math.abs(desiredState.speedMetersPerSecond) > kMaxSpeed * 0.01 ?
+        //     mLastAngle :
+        //     desiredState.angle.getRadians();
 
-        // SmartDashboard.putNumber("mod " + mModuleNumber + " angle reference", angle);
+        double angle = desiredState.angle.getRadians();
 
-        mAngleController.setReference(angle, ControlType.kPosition); // FIXME: might need to transform angle
+        mAngleController.setReference(angle, ControlType.kPosition);
         mLastAngle = angle;
     }
 
@@ -93,6 +93,7 @@ public class SwerveModule {
 
     public void putSmartDashboardValues() {
         SmartDashboard.putNumber("mod " + mModuleNumber + " encoder", mSteeringEncoder.getDistance());
+        SmartDashboard.putNumber("mod " + mModuleNumber + " encoder absolute", mSteeringEncoder.getAbsolutePosition());
         SmartDashboard.putNumber("mod " + mModuleNumber + " integrated", mIntegratedAngleEncoder.getPosition());
         SmartDashboard.putNumber("mod " + mModuleNumber + " velocity", mDriveEncoder.getVelocity());
 
