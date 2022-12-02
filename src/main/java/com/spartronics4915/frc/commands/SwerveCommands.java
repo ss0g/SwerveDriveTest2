@@ -99,7 +99,7 @@ public class SwerveCommands {
 
             Translation2d translation = new Translation2d(-y1, -x1).times(kMaxSpeed);
             
-            mSwerve.drive(translation, -x2, true);
+            mSwerve.drive(translation, -x2 * kMaxAngularSpeed, true);
         }
 
         @Override

@@ -47,14 +47,14 @@ public class Swerve extends SubsystemBase {
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
                 translation.getX(),
                 translation.getY(),
-                rotation * kMaxAngularSpeed,
+                rotation,
                 getYaw()
             );
         } else {
             chassisSpeeds = new ChassisSpeeds(
                 translation.getX(),
                 translation.getY(),
-                rotation * kMaxAngularSpeed
+                rotation
             );
         }
 
