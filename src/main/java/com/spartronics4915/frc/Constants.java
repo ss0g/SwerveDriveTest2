@@ -45,7 +45,7 @@ public final class Constants {
             public static final double kV = 0.0; // placeholder
             public static final double kA = 0.0; // placeholder
 
-            public static final int kContinuousCurrentLimit = 80;
+            public static final int kContinuousCurrentLimit = 30; // 80
 
             public static final double kGearRatio = 8.33 / 1.0;
             public static final double kVelocityConversionFactor = ((kWheelDiameter * Math.PI) / kGearRatio) / 60.0; // ??? what is the 60 ?? TODO: try removing
@@ -57,7 +57,7 @@ public final class Constants {
             public static final double kD = 0.005;
             public static final double kFF = 0;
 
-            public static final int kContinuousCurrentLimit = 20;
+            public static final int kContinuousCurrentLimit = 15;
 
             public static final double kGearRatio = 18.0 / 1.0;
             public static final double kPositionConversionFactor = 2 * Math.PI / kGearRatio;
@@ -69,6 +69,9 @@ public final class Constants {
 
         public static final double kMaxSpeed = Units.feetToMeters(11.9);
         public static final double kMaxAngularSpeed = kMaxSpeed / kChassisRadius;
+
+        public static final double kSlowModeSpeedMultiplier = 0.3;
+        public static final double kSlowModeAngularSpeedMultiplier = 0.3;
 
         public static final double kWheelDiameter = Units.inchesToMeters(4.0);
         
@@ -143,10 +146,12 @@ public final class Constants {
     public static final class OI {
         public static final int kControllerID = 2;
 
-        public static final int kToggleFieldRelativeButton = 1; // i think this is the A button
-        public static final int kTestingButton = 1;
+        public static final int kToggleFieldRelativeButton = 1;
+        public static final int kResetYawButton = 8;
+        public static final int kSlowModeAxis = 3;
 
-        public static final double kDeadband = 0.08;
+        public static final double kStickDeadband = 0.08;
+        public static final double kTriggerDeadband = 0.08;
         public static final double kResponseCurveExponent = 5.0 / 3.0;
     }
 }

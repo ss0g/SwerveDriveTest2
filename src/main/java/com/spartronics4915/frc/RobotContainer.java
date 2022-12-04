@@ -68,6 +68,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         new JoystickButton(mController, kToggleFieldRelativeButton)
             .whenPressed(mSwerveCommands.new ToggleFieldRelative());
+
+        new JoystickButton(mController, kResetYawButton)
+            .whenPressed(mSwerveCommands.new ResetYaw());
     }
 
     /**

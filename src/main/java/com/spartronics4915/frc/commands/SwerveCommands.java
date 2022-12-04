@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -19,6 +20,7 @@ public class SwerveCommands {
 
     private final Swerve mSwerve;
     private boolean mIsFieldRelative = true;
+    private boolean mIsSlowMode = false;
 
     public SwerveCommands(XboxController controller, Swerve swerve) {
         mController = controller;
@@ -39,7 +41,9 @@ public class SwerveCommands {
         public void execute() {}
 
         @Override
-        public void end(boolean interrupted) {}
+        public void end(boolean interrupted) {
+            mIsFieldRelative = mSwerve.getFieldRelative(); // just to make sure
+        }
 
         @Override
         public boolean isFinished() {
@@ -47,13 +51,45 @@ public class SwerveCommands {
         }
     }
 
-    public class ToggleFieldRelative extends ConditionalCommand {
-        public ToggleFieldRelative() {
-            super(
-                new SetFieldRelative(false),
-                new SetFieldRelative(true),
-                mSwerve::getFieldRelative
-            );
+    public class ToggleFieldRelative extends CommandBase {
+        public ToggleFieldRelative() {}
+
+        @Override
+        public void initialize() {
+            mSwerve.toggleFieldRelative();
+        }
+
+        @Override
+        public void execute() {}
+
+        @Override
+        public void end(boolean interrupted) {
+            mIsFieldRelative = mSwerve.getFieldRelative();
+        }
+
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
+
+    public class ResetYaw extends CommandBase {
+        public ResetYaw() {}
+
+        @Override
+        public void initialize() {
+            mSwerve.zeroNavX();
+        }
+
+        @Override
+        public void execute() {}
+
+        @Override
+        public void end(boolean interrupted) {}
+
+        @Override
+        public boolean isFinished() {
+            return true;
         }
     }
 
@@ -64,6 +100,7 @@ public class SwerveCommands {
 
         @Override
         public void initialize() {
+            mSwerve.resetOdometry(new Pose2d()); // for odometry testing
             mSwerve.zeroModules();
         }
 
@@ -98,8 +135,14 @@ public class SwerveCommands {
             x2 = applyTransformations(x2);
 
             Translation2d translation = new Translation2d(-y1, -x1).times(kMaxSpeed);
+            double rotation = -x2 * kMaxAngularSpeed;
+
+            if (Math.abs(mController.getRawAxis(kSlowModeAxis)) <= kTriggerDeadband) { // <= for slow mode default
+                translation = translation.times(kSlowModeSpeedMultiplier);
+                rotation *= kSlowModeAngularSpeedMultiplier;
+            }
             
-            mSwerve.drive(translation, -x2 * kMaxAngularSpeed, true);
+            mSwerve.drive(translation, rotation, true);
         }
 
         @Override
@@ -152,7 +195,7 @@ public class SwerveCommands {
     }
 
     private double applyTransformations(double c) {
-        return applyResponseCurve(MathUtil.applyDeadband(c, kDeadband));
+        return applyResponseCurve(MathUtil.applyDeadband(c, kStickDeadband));
     }
 
     private double applyResponseCurve(double c) {

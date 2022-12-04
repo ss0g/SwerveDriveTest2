@@ -79,6 +79,10 @@ public class Swerve extends SubsystemBase {
         mIsFieldRelative = fieldRelative;
     }
 
+    public void toggleFieldRelative() {
+        mIsFieldRelative = !mIsFieldRelative;
+    }
+
     public boolean getFieldRelative() {
         return mIsFieldRelative;
     }
@@ -128,5 +132,8 @@ public class Swerve extends SubsystemBase {
         for (SwerveModule mod : mModules) {
             mod.putSmartDashboardValues();
         }
+        SmartDashboard.putNumber("pose x", getPose().getX());
+        SmartDashboard.putNumber("pose y", getPose().getY());
+        SmartDashboard.putNumber("pose rotation degrees", getPose().getRotation().getDegrees());
     }
 }
