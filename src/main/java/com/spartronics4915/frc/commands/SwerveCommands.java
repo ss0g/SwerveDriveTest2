@@ -93,6 +93,26 @@ public class SwerveCommands {
         }
     }
 
+    public class ResetOdometry extends CommandBase {
+        public ResetOdometry() {}
+
+        @Override
+        public void initialize() {
+            mSwerve.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+        }
+
+        @Override
+        public void execute() {}
+
+        @Override
+        public void end(boolean interrupted) {}
+
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
+
     public class TeleopInitCommand extends CommandBase {
         public TeleopInitCommand() {
             addRequirements(mSwerve);

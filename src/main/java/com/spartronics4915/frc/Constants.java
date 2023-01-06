@@ -54,7 +54,7 @@ public final class Constants {
         public static final class Angle {
             public static final double kP = 1.0;
             public static final double kI = 0.0;
-            public static final double kD = 0.005;
+            public static final double kD = 0.5;
             public static final double kFF = 0;
 
             public static final int kContinuousCurrentLimit = 15;
@@ -143,11 +143,16 @@ public final class Constants {
         }
     }
 
+    public static final class Camera {
+        public static final String kCameraName = "photoncamera"; // TODO: rename camera to "frontcam" or similar
+    }
+
     public static final class OI {
         public static final int kControllerID = 2;
 
         public static final int kToggleFieldRelativeButton = 1;
         public static final int kResetYawButton = 8;
+        public static final int kResetOdometryButton = 3;
         public static final int kSlowModeAxis = 3;
 
         public static final double kStickDeadband = 0.08;

@@ -71,6 +71,9 @@ public class RobotContainer {
 
         new JoystickButton(mController, kResetYawButton)
             .whenPressed(mSwerveCommands.new ResetYaw());
+
+        new JoystickButton(mController, kResetOdometryButton)
+            .whenPressed(mSwerveCommands.new ResetOdometry());
     }
 
     /**
